@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var foodImage: UIImageView!
+    
+    @IBOutlet weak var foodName: UITextField!
+    
+    @IBOutlet weak var cookTime: UITextField!
+    
+    @IBOutlet weak var cookHow: UITextView!
+    
+    var uid = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if let user = FIRAuth.auth()?.currentUser {
+            uid = user.uid
+        }
+    
     }
 
     override func didReceiveMemoryWarning() {

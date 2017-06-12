@@ -6,4 +6,13 @@
 //  Copyright © 2017年 Mac. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class Meals: NSObject{
+    
+    var mealName: String?
+    var mealTime: String?
+    
+    
+    
+}

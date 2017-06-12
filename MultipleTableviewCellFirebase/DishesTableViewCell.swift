@@ -10,6 +10,12 @@ import UIKit
 
 class DishesTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var nameMeal: UILabel!
+    
+    @IBOutlet weak var timeMeal: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
