@@ -19,6 +19,7 @@
 		042EA4EC1EECD49100873E96 /* Meals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA4EB1EECD49100873E96 /* Meals.swift */; };
 		042EA4EE1EECD56100873E96 /* DishesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA4ED1EECD56100873E96 /* DishesTableViewCell.swift */; };
 		042EA4F01EECEAD500873E96 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA4EF1EECEAD500873E96 /* LogInViewController.swift */; };
+		043EC7F71EF42FBE008E9D35 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043EC7F61EF42FBE008E9D35 /* InitialViewController.swift */; };
 		9749E056C99F3B105FEA57EE /* Pods_MultipleTableviewCellFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80E6A13A4F52EEAEE8C9DEB /* Pods_MultipleTableviewCellFirebase.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		042EA4EB1EECD49100873E96 /* Meals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meals.swift; sourceTree = "<group>"; };
 		042EA4ED1EECD56100873E96 /* DishesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DishesTableViewCell.swift; sourceTree = "<group>"; };
 		042EA4EF1EECEAD500873E96 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		043EC7F61EF42FBE008E9D35 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		A80E6A13A4F52EEAEE8C9DEB /* Pods_MultipleTableviewCellFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultipleTableviewCellFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD75B9D053EC1EC92258D4A3 /* Pods-MultipleTableviewCellFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultipleTableviewCellFirebase.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultipleTableviewCellFirebase/Pods-MultipleTableviewCellFirebase.release.xcconfig"; sourceTree = "<group>"; };
 		ED66B4D00FB695042AE69961 /* Pods-MultipleTableviewCellFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultipleTableviewCellFirebase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultipleTableviewCellFirebase/Pods-MultipleTableviewCellFirebase.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			children = (
 				040638C91EEC87D700CADE7C /* AppDelegate.swift */,
 				042EA4EF1EECEAD500873E96 /* LogInViewController.swift */,
+				043EC7F61EF42FBE008E9D35 /* InitialViewController.swift */,
 				042EA4E21EECD33F00873E96 /* SignUpViewController.swift */,
 				042EA4EA1EECD44900873E96 /* Split */,
 				042EA4E41EECD3BF00873E96 /* MainTableViewController.swift */,
@@ -245,6 +248,7 @@
 				042EA4E71EECD3EC00873E96 /* DishesViewController.swift in Sources */,
 				042EA4E51EECD3BF00873E96 /* MainTableViewController.swift in Sources */,
 				042EA4E31EECD33F00873E96 /* SignUpViewController.swift in Sources */,
+				043EC7F71EF42FBE008E9D35 /* InitialViewController.swift in Sources */,
 				042EA4E91EECD42D00873E96 /* DetailViewController.swift in Sources */,
 				042EA4F01EECEAD500873E96 /* LogInViewController.swift in Sources */,
 				042EA4EC1EECD49100873E96 /* Meals.swift in Sources */,
