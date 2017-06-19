@@ -36,7 +36,6 @@ class DishesViewController: UIViewController {
             FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookTime").setValue(cookTime.text!)
             FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookName").setValue(cookName.text!)
             FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookhow").setValue(cookHow.text!)
-            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookPic").setValue(uniqueString)
             
             
             done()
