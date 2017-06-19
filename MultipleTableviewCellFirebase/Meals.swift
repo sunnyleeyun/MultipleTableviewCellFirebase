@@ -10,9 +10,12 @@ import UIKit
 
 class Meals: NSObject{
     
-    var mealName: String?
-    var mealTime: String?
+    var FoodName: String?
+    var cookTime: String?
     
+    var cookPic: String?
     
+    var cookhow: String?
+    var cookName: String?
     
 }

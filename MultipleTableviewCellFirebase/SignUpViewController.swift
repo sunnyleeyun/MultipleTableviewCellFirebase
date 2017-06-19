@@ -26,6 +26,32 @@ class SignUpViewController: UIViewController {
     // 可以自動產生一組獨一無二的 ID 號碼，方便等一下上傳圖片的命名
     let uniqueString = NSUUID().uuidString
     
+    
+    @IBAction func confirm(_ sender: Any) {
+        
+        if cookName.text != "" && foodName.text != "" && cookTime.text != "" && howCook.text != ""{
+            
+            
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("FoodName").setValue(foodName.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookTime").setValue(cookTime.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookName").setValue(cookName.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookhow").setValue(howCook.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookPic").setValue(uniqueString)
+
+            done()
+            
+            
+        }
+
+    }
+    
+    func done(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "MainNavigationID") as! UINavigationController
+        self.present(nextVC,animated:true,completion:nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,35 +60,7 @@ class SignUpViewController: UIViewController {
         }
 
         
-        let rightButtonItem = UIBarButtonItem.init(
-            title: "Title",
-            style: .done,
-            target: self,
-            action: "rightButtonAction:"
-        )
         
-        self.navigationItem.rightBarButtonItem = rightButtonItem
-    
-    }
-
-    func rightButtonAction(sender: UIBarButtonItem){
-        
-        if foodName.text != "" && cookTime.text != "" && howCook.text != ""{
-        
-            FIRDatabase.database().reference(withPath: "MealList/\(self.uniqueString)").child("FoodName").setValue(foodName.text!)
-            FIRDatabase.database().reference(withPath: "MealList/\(self.uniqueString)").child("cookTime").setValue(foodName.text!)
-            
-            
-            
-            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("FoodName").setValue(foodName.text!)
-            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookTime").setValue(cookTime.text!)
-            
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let nextVC = storyboard.instantiateViewController(withIdentifier: "LogInViewControllerID")as! LogInViewController
-            self.present(nextVC,animated:true,completion:nil)
-            
-        }
     }
 
     
@@ -140,9 +138,9 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
             selectedImageFromPicker = pickedImage
         }
         
+        // 可以自動產生一組獨一無二的 ID 號碼，方便等一下上傳圖片的命名
+        let uniqueString = NSUUID().uuidString
         
-        
-
         
         if let user = FIRAuth.auth()?.currentUser {
             uid = user.uid
@@ -152,13 +150,14 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
             if let selectedImage = selectedImageFromPicker {
                 
                 
-                let storageRef = FIRStorage.storage().reference().child(uid).child("\(uniqueString).png")
+                let storageRef = FIRStorage.storage().reference().child("\(uniqueString).png")
                 
                 if let uploadData = UIImagePNGRepresentation(selectedImage) {
                     // 這行就是 FirebaseStorage 關鍵的存取方法。
                     storageRef.put(uploadData, metadata: nil, completion: { (data, error) in
                         
                         if error != nil {
+                            
                             // 若有接收到錯誤，我們就直接印在 Console 就好，在這邊就不另外做處理。
                             print("Error: \(error!.localizedDescription)")
                             return
@@ -171,8 +170,9 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
                             print("Photo Url: \(uploadImageUrl)")
                             
                             
-                            let databaseRef = FIRDatabase.database().reference(withPath: "MealList/\(self.uid)/\(self.uniqueString)")
-                            
+                            //let databaseRef = FIRDatabase.database().reference(withPath: "User/\(self.uid)/Profile/Verification").child(uniqueString)
+                            let databaseRef = FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookPic")
+
                             databaseRef.setValue(uploadImageUrl, withCompletionBlock: { (error, dataRef) in
                                 
                                 if error != nil {
@@ -198,7 +198,6 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
         
         
     }
-    
     
     
 }

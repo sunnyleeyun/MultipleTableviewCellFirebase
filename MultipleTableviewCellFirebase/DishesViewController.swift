@@ -13,6 +13,8 @@ import FirebaseDatabase
 import FirebaseStorage
 
 class DishesViewController: UIViewController {
+    
+    @IBOutlet weak var cookName: UITextField!
 
     @IBOutlet weak var foodName: UITextField!
     
@@ -21,6 +23,27 @@ class DishesViewController: UIViewController {
     @IBOutlet weak var cookHow: UITextView!
     
     var uid = ""
+    
+    let uniqueString = NSUUID().uuidString
+
+    
+    @IBAction func confirm(_ sender: Any) {
+        
+        if cookName.text != "" && foodName.text != "" && cookTime.text != "" && cookHow.text != ""{
+            
+            
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("FoodName").setValue(foodName.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookTime").setValue(cookTime.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookName").setValue(cookName.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookhow").setValue(cookHow.text!)
+            FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookPic").setValue(uniqueString)
+            
+            
+            done()
+        }
+
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +58,13 @@ class DishesViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func done(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "MainNavigationID") as! UINavigationController
+        self.present(nextVC,animated:true,completion:nil)
+
     }
     
     @IBAction func addImage(_ sender: Any) {
@@ -118,7 +148,6 @@ extension DishesViewController: UIImagePickerControllerDelegate, UINavigationCon
         let uniqueString = NSUUID().uuidString
         
         
-        
         if let user = FIRAuth.auth()?.currentUser {
             uid = user.uid
             
@@ -127,13 +156,14 @@ extension DishesViewController: UIImagePickerControllerDelegate, UINavigationCon
             if let selectedImage = selectedImageFromPicker {
                 
                 
-                let storageRef = FIRStorage.storage().reference().child(self.uid).child("\(uniqueString).png")
+                let storageRef = FIRStorage.storage().reference().child("\(uniqueString).png")
                 
                 if let uploadData = UIImagePNGRepresentation(selectedImage) {
                     // 這行就是 FirebaseStorage 關鍵的存取方法。
                     storageRef.put(uploadData, metadata: nil, completion: { (data, error) in
                         
                         if error != nil {
+                            
                             // 若有接收到錯誤，我們就直接印在 Console 就好，在這邊就不另外做處理。
                             print("Error: \(error!.localizedDescription)")
                             return
@@ -146,7 +176,8 @@ extension DishesViewController: UIImagePickerControllerDelegate, UINavigationCon
                             print("Photo Url: \(uploadImageUrl)")
                             
                             
-                            let databaseRef = FIRDatabase.database().reference(withPath: "MealList/\(self.uid)/\(uniqueString)")
+                            
+                            let databaseRef = FIRDatabase.database().reference(withPath: "Meal/\(self.uniqueString)").child("cookPic")
                             
                             databaseRef.setValue(uploadImageUrl, withCompletionBlock: { (error, dataRef) in
                                 
@@ -173,6 +204,7 @@ extension DishesViewController: UIImagePickerControllerDelegate, UINavigationCon
         
         
     }
+
     
     
     

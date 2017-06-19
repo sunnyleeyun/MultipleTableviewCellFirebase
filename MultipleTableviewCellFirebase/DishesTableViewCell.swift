@@ -15,6 +15,13 @@ class DishesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var timeMeal: UILabel!
     
+    @IBOutlet weak var imageMeal: UIImageView!
+    
+    @IBOutlet weak var cookNameMeal: UILabel!
+    
+    @IBOutlet weak var cookHowMeal: UITextView!
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

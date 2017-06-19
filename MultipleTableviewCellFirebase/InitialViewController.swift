@@ -11,11 +11,20 @@ import FirebaseDatabase
 import FirebaseAuth
 
 class InitialViewController: UIViewController {
-
+    
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var passsword: UITextField!
+    
+    var uid = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if let user = FIRAuth.auth()?.currentUser {
+            uid = user.uid
+        }
+    
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,14 +33,68 @@ class InitialViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func logIn(_ sender: Any) {
+        
+        if self.email.text != "" || self.passsword.text != ""{
+            
+            FIRAuth.auth()?.signIn(withEmail: self.email.text!, password: self.passsword.text!, completion: { (user, error) in
+                
+                if error == nil {
+                    if let user = FIRAuth.auth()?.currentUser{
+                        self.uid = user.uid
+                    }
+                    
+                    FIRDatabase.database().reference(withPath: "Online-Status/\(self.uid)").setValue("ON")
+                    
+                    self.doneLogIn()
+                }
+                
+            })
+        }
+        
     }
-    */
+
+    @IBAction func signUp(_ sender: Any) {
+        if self.email.text != "" || self.passsword.text != ""{
+            
+            FIRAuth.auth()?.createUser(withEmail: self.email.text!, password: self.passsword.text!, completion: { (user, error) in
+                
+                if error == nil {
+                    if let user = FIRAuth.auth()?.currentUser{
+                        
+                        self.uid = user.uid
+                        
+                    }
+                    
+                    
+                    FIRDatabase.database().reference(withPath: "ID/\(self.uid)/Profile/Safety-Check").setValue("ON")
+                    FIRDatabase.database().reference(withPath: "Online-Status/\(self.uid)").setValue("ON")
+
+                    self.doneSignUp()
+                    
+                    }
+                
+            })
+        }
+    }
+    
+    func doneLogIn(){
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "MainNavigationID") as! UINavigationController
+        
+        self.present(nextVC,animated:true,completion:nil)
+        
+    }
+    
+    func doneSignUp(){
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "SignUpViewControllerID")as! SignUpViewController
+        self.present(nextVC,animated:true,completion:nil)
+        
+
+    }
+    
 
 }

@@ -24,6 +24,13 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     var mealList = [Meals]()
     
+    func done(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = storyboard.instantiateViewController(withIdentifier: "DishesViewControllerID") as! DishesViewController
+        self.navigationController?.pushViewController(nextVC, animated: true)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,13 +41,16 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
             uid = user.uid
         }
         
+       
         
         let rightButtonItem = UIBarButtonItem.init(
-            title: "Add",
-            style: .plain,
+            title: "新增",
+            style: .done,
             target: self,
-            action: "rightButtonAction:"
+            action: #selector(done)
         )
+        self.navigationItem.rightBarButtonItem = rightButtonItem
+        
         
         databaseRef = FIRDatabase.database().reference()
         storageRef = FIRStorage.storage().reference()
@@ -58,9 +68,9 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     func fetchMealsList(){
         
-        //let uniqueString = NSUUID().uuidString
 
-        refHandle = databaseRef.child("MealList").observe(.childAdded, with: { (snapshot) in
+        
+        refHandle = databaseRef.child("Meal").observe(.childAdded, with: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String : AnyObject]{
                 print("dictionary is \(dictionary)")
@@ -90,28 +100,35 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DishesTableViewCell
         
-        cell.nameMeal.text = mealList[indexPath.row].mealName
-        cell.timeMeal.text = mealList[indexPath.row].mealTime
+        cell.cookNameMeal.text = mealList[indexPath.row].cookName
+        cell.nameMeal.text = mealList[indexPath.row].FoodName
+        cell.timeMeal.text = mealList[indexPath.row].cookTime
+
+        if let profileImageUrl = mealList[indexPath.row].cookPic{
+            let url = URL(string: profileImageUrl)
+            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+                if error != nil{
+                    print(error)
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    cell.imageMeal.image = UIImage(data: data!)
+                }
+            
+            }).resume()
+            
+        }
+        
+        cell.cookHowMeal.text = mealList[indexPath.row].cookhow
+        
         
         return cell
         
         
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        goDetail()
-    }
     
-    
-    func goDetail(){
-        
-    }
-    
-    
-    func goDishes(){
-        
-    }
-
     /*
     // MARK: - Navigation
 
